@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>До Нового Года</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f0f23, #1a1a2e, #16213e, #0f3b58);
+            background-size: 100% 100%;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            color: #e0e0e0;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(10, 15, 30, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            backdrop-filter: blur(10px);
+            max-width: 400px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+            letter-spacing: 1px;
+            font-weight: 300;
+            color: #ffffff;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            align-items: flex-start;
+        }
+
+        .time-unit {
+            background: rgba(20, 30, 50, 0.6);
+            border-radius: 12px;
+            padding: 12px 10px;
+            min-width: 70px;
+            max-width: 70px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(100, 150, 200, 0.3);
+            transition: transform 0.2s ease;
+            text-align: center;
+        }
+
+        .time-unit:hover {
+            transform: translateY(-3px);
+        }
+
+        .time-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+        }
+
+        .time-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            font-weight: 300;
+            line-height: 1;
+            text-align: center;
+            color: #a0c4ff;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+            color: #d1e8ff;
+        }
+
+        .additional-info {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            opacity: 0.8;
+            font-weight: 300;
+            color: #a0c4ff;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .info-item {
+            background: rgba(100, 150, 200, 0.2);
+            padding: 5px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(100, 150, 200, 0.3);
+        }
+
+        .current-date {
+            margin-top: 10px;
+            font-size: 0.7rem;
+            opacity: 0.7;
+            color: #89c4f4;
+            font-style: italic;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -30px;
+            color: #ffffff;
+            font-size: 20px;
+            pointer-events: none;
+            opacity: 0.8;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            z-index: 1;
+            animation: fall linear;
+        }
+
+        .snowdrift {
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            height: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 100% 100% 0 0;
+            z-index: 100;
+            transition: height 2s ease-out;
+            overflow: hidden;
+            box-shadow: 
+                0 -5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .snowdrift::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -5%;
+            width: 110%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 100% 100% 0 0;
+            animation: snowdrift-wobble 15s ease-in-out infinite;
+        }
+
+        .snowdrift::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: -2%;
+            width: 104%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 100% 100% 0 0;
+            animation: snowdrift-wobble 20s ease-in-out infinite reverse;
+        }
+
+        @keyframes snowdrift-wobble {
+            0%, 100% {
+                transform: scaleX(1) skewX(0deg);
+            }
+            25% {
+                transform: scaleX(1.02) skewX(1deg);
+            }
+            50% {
+                transform: scaleX(0.98) skewX(-0.5deg);
+            }
+            75% {
+                transform: scaleX(1.01) skewX(0.3deg);
+            }
+        }
+
+        .snow-particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: snowdrift-float 8s ease-in-out infinite;
+        }
+
+        @keyframes snowdrift-float {
+            0% {
+                transform: translateX(0) translateY(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(20px) translateY(-10px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                top: 10px;
+                left: 10px;
+                max-width: 90vw;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .time-number {
+                font-size: 1.8rem;
+            }
+            
+            .time-unit {
+                padding: 12px;
+                min-width: 70px;
+            }
+        }
+
+        .firework {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 200;
+        }
+
+        .firework-spark {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            animation: spark-explode 1.2s ease-out forwards;
+            opacity: 0;
+            z-index: 199;
+        }
+
+        @keyframes launch {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            30% {
+                opacity: 1;
+            }
+            90% {
+                transform: translateY(calc(var(--target-height) + 0px)) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(var(--target-height) + 0px)) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+                box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.9);
+            }
+            20% {
+                transform: scale(8);
+                box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.8);
+            }
+            40% {
+                transform: scale(15);
+                box-shadow: 0 0 40px 20px rgba(255, 255, 255, 0.7);
+            }
+            60% {
+                transform: scale(25);
+                box-shadow: 0 0 50px 25px rgba(255, 255, 255, 0.6);
+            }
+            100% {
+                transform: scale(35);
+                opacity: 0;
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        @keyframes spark-explode {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 1;
+            }
+            20% {
+                transform: translate(0, 0) scale(1.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(100px, 100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+
+        /* Стили для центрального времени и даты */
+        .center-time {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .current-time {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            font-family: 'Courier New', monospace;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .current-full-date {
+            font-size: 1.2rem;
+            color: #a0c4ff;
+            opacity: 0.9;
+            font-weight: 300;
+            text-shadow: 0 0 10px rgba(160, 196, 255, 0.3);
+        }
+
+        .weather-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(10, 15, 30, 0.7);
+            border-radius: 15px;
+            padding: 15px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 250px;
+            text-align: center;
+        }
+
+        .weather-title {
+            font-size: 0.9rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+            font-weight: 300;
+        }
+
+        .weather-icon {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .weather-temp {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .weather-desc {
+            font-size: 0.8rem;
+            color: #a0c4ff;
+            opacity: 0.9;
+            margin-bottom: 5px;
+            text-transform: capitalize;
+        }
+
+        .weather-details {
+            font-size: 0.7rem;
+            color: #89c4f4;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .weather-detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 2px 0;
+        }
+
+        .weather-precipitation {
+            display: none;
+        }
+
+        .weather-loading {
+            color: #a0c4ff;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .weather-error {
+            color: #ff6b6b;
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .weather-container {
+                top: 10px;
+                right: 10px;
+                padding: 10px 15px;
+                max-width: 200px;
+            }
+            
+            .weather-temp {
+                font-size: 1.5rem;
+            }
+            
+            .weather-icon {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .center-time {
+                top: 45%;
+            }
+            
+            .current-time {
+                font-size: 2.5rem;
+            }
+            
+            .current-full-date {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>До Нового Года</h1>
+        
+        <div class="countdown">
+            <div class="time-unit">
+                <span id="days" class="time-number">0</span>
+                <div class="time-label">Дней</div>
+            </div>
+            <div class="time-unit">
+                <span id="hours" class="time-number">0</span>
+                <div class="time-label">Часов</div>
+            </div>
+            <div class="time-unit">
+                <span id="minutes" class="time-number">0</span>
+                <div class="time-label">Минут</div>
+            </div>
+            <div class="time-unit">
+                <span id="seconds" class="time-number">0</span>
+                <div class="time-label">Секунд</div>
+            </div>
+        </div>
+        
+        <div id="message" class="message">
+            Праздник уже близко! 🎄
+        </div>
+
+        <!-- Скрытые элементы для JavaScript -->
+        <div style="display: none;">
+            <span id="current-date">-</span>
+            <span id="full-date">-</span>
+            <span id="days-in-year">-</span>
+            <span id="percent-year">-</span>
+            <span id="days-remaining">-</span>
+        </div>
+    </div>
+
+    <!-- Блок погоды -->
+    <div class="weather-container">
+        <div class="weather-title">Погода в Красноярске</div>
+        <div id="weather-icon" class="weather-icon">❄️</div>
+        <div id="weather-temp" class="weather-temp">-12°C</div>
+        <div id="weather-desc" class="weather-desc">Снег</div>
+        <div id="weather-details" class="weather-details">
+            <div class="weather-detail-item">
+                <span>Ощущается:</span>
+                <span id="weather-feels">-18°C</span>
+            </div>
+            <div class="weather-detail-item">
+                <span>Влажность:</span>
+                <span id="weather-humidity">85%</span>
+            </div>
+            <div class="weather-detail-item">
+                <span>Ветер:</span>
+                <span id="weather-wind">5 м/с</span>
+            </div>
+            <div class="weather-detail-item weather-precipitation" id="weather-precipitation" style="display: none;">
+                <span>Осадки:</span>
+                <span id="weather-rain">0 мм</span>
+            </div>
+        </div>
+        <div id="weather-loading" class="weather-loading" style="display: none;">Загрузка...</div>
+        <div id="weather-error" class="weather-error" style="display: none;">Ошибка загрузки погоды</div>
+    </div>
+
+    <!-- Центральное время и дата -->
+    <div class="center-time">
+        <div class="current-time" id="current-time">00:00:00</div>
+        <div class="current-full-date" id="current-full-date">-</div>
+    </div>
+
+    <!-- Сугробы -->
+    <div class="snowdrift" id="snowdrift"></div>
+
+
+    <script>
+        // Обновляем текущее время в центре
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ru-RU', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+            
+            const fullDateString = now.toLocaleDateString('ru-RU', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            document.getElementById('current-time').textContent = timeString;
+            document.getElementById('current-full-date').textContent = fullDateString;
+        }
+
+        // Создаем снежинки
+        function createSnowflakes() {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.textContent = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 4 + 3 + 's';
+            snowflake.style.opacity = '0';
+            document.body.appendChild(snowflake);
+            
+            // Небольшая задержка для срабатывания анимации
+            setTimeout(() => {
+                snowflake.style.opacity = '0.8';
+            }, 10);
+            
+            setTimeout(() => {
+                if (snowflake.parentNode) {
+                    snowflake.remove();
+                }
+            }, 7000);
+        }
+
+        // Обновляем дополнительную информацию
+        function updateAdditionalInfo() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            
+            // Текущая дата
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('ru-RU', { month: '2-digit', day: '2-digit' });
+            document.getElementById('full-date').textContent = now.toLocaleDateString('ru-RU', options);
+            
+        // Проверяем, високосный ли год
+        const isLeapYear = (currentYear % 4 === 0 && currentYear % 100 !== 0) || (currentYear % 400 === 0);
+        const daysInYear = isLeapYear ? 366 : 365;
+        document.getElementById('days-in-year').textContent = daysInYear;
+        
+        // День года
+        const start = new Date(currentYear, 0, 0);
+        const diff = now - start;
+        const dayOfYear = Math.floor(diff / 86400000);
+        
+        // Процент года
+        const percent = Math.round((dayOfYear / daysInYear) * 100);
+        document.getElementById('percent-year').textContent = percent;
+        
+        // Осталось процентов
+        const remainingPercent = 100 - percent;
+        document.getElementById('days-remaining').textContent = remainingPercent;
+        }
+
+        // Создаем фейерверки (если до Нового года осталось меньше дня)
+        function createFireworks() {
+            // Генерируем случайную позицию и высоту для фейерверка
+            const randomLeft = Math.random() * 100;
+            const randomHeight = Math.random() * (window.innerHeight * 0.7 - 100) + 100;
+            
+            // Рассчитываем позицию в пикселях
+            const x = (randomLeft / 100) * window.innerWidth;
+            const y = window.innerHeight - randomHeight;
+            
+            // Создаем искры сразу без анимации запуска
+            createFireworkSparks(x, y);
+        }
+
+        // Создаем искры фейерверка
+        function createFireworkSparks(x, y) {
+            const colors = [
+                '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7',
+                '#dda0dd', '#98d8c8', '#f7b7a3', '#eb8f8f', '#fdf75d'
+            ];
+            
+            const sparkCount = 12 + Math.floor(Math.random() * 8); // 12-20 искр
+            
+            for (let i = 0; i < sparkCount; i++) {
+                const spark = document.createElement('div');
+                spark.className = 'firework-spark';
+                
+                // Случайные направления разлета
+                const angle = (Math.PI * 2 * i) / sparkCount;
+                const distance = 50 + Math.random() * 100;
+                
+                // Устанавливаем начальное положение
+                spark.style.left = x + 'px';
+                spark.style.top = y + 'px';
+                spark.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                spark.style.boxShadow = `0 0 8px 2px ${colors[Math.floor(Math.random() * colors.length)]}`;
+                
+                // Добавляем анимацию с помощью keyframes
+                const keyframes = [
+                    { 
+                        transform: 'translate(0, 0) scale(0)', 
+                        opacity: 1 
+                    },
+                    { 
+                        transform: 'translate(0, 0) scale(1.5)', 
+                        opacity: 1,
+                        offset: 0.2
+                    },
+                    { 
+                        transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(1)`, 
+                        opacity: 0 
+                    }
+                ];
+                
+                spark.animate(keyframes, {
+                    duration: 1200,
+                    easing: 'ease-out'
+                });
+                
+                document.body.appendChild(spark);
+                
+                // Удаляем искру после анимации
+                setTimeout(() => {
+                    if (spark.parentNode) {
+                        spark.remove();
+                    }
+                }, 1200);
+            }
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const nextYear = currentYear + 1;
+            
+            // Новый год - 1 января следующего года
+            const newYear = new Date(nextYear, 0, 1);
+            
+            const diff = newYear - now;
+            
+            // Если разница отрицательная, значит Новый год уже прошел
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '0';
+                document.getElementById('hours').textContent = '0';
+                document.getElementById('minutes').textContent = '0';
+                document.getElementById('seconds').textContent = '0';
+                document.getElementById('message').textContent = 'С Новым Годом! 🎉';
+                return;
+            }
+            
+            // Рассчитываем дни, часы, минуты и секунды
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            // Обновляем отображение
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+            
+            // Обновляем сообщение
+            if (days === 0) {
+                document.getElementById('message').textContent = 'Новый год уже сегодня! 🎊';
+                // Запускаем фейерверки, если до Нового года остался последний день
+                if (Math.random() < 0.5) {
+                    createFireworks();
+                }
+            } else if (days === 1) {
+                document.getElementById('message').textContent = 'До Нового года остался всего 1 день! ⭐';
+            } else {
+                document.getElementById('message').textContent = `Праздник уже близко! Осталось ${days} дней! 🎄`;
+            }
+        }
+
+        // Обновляем счетчик каждую секунду
+        setInterval(updateCountdown, 1000);
+        
+        // Обновляем дополнительную информацию каждую секунду
+        setInterval(updateAdditionalInfo, 1000);
+        
+        // Обновляем текущее время каждую секунду
+        setInterval(updateCurrentTime, 1000);
+        
+        // Запускаем первоначальное обновление
+        updateCountdown();
+        updateAdditionalInfo();
+        updateCurrentTime();
+        
+        // Функция для получения погоды
+        async function getWeather() {
+            const loadingEl = document.getElementById('weather-loading');
+            const errorEl = document.getElementById('weather-error');
+            const weatherContainer = document.querySelector('.weather-container');
+            
+            // Скрываем погоду и показываем загрузку
+            weatherContainer.style.opacity = '0';
+            loadingEl.style.display = 'block';
+            errorEl.style.display = 'none';
+            
+            try {
+                // Попробуем получить геолокацию пользователя
+                const location = await new Promise((resolve, reject) => {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                resolve({
+                                    lat: position.coords.latitude,
+                                    lon: position.coords.longitude
+                                });
+                            },
+                            () => {
+                                // Если геолокация отклонена, используем Красноярск
+                                resolve({ lat: 56.0184, lon: 92.8672 });
+                            },
+                            { timeout: 5000 }
+                        );
+                    } else {
+                        // Если геолокация не поддерживается, используем Красноярск
+                        resolve({ lat: 56.0184, lon: 92.8672 });
+                    }
+                });
+                
+                // Получаем погоду с OpenWeatherMap API
+                const apiKey = '3c9c7c2349b44f12237483b59bda63ec'; // Замените на реальный API ключ
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&units=metric&lang=ru&appid=${apiKey}`);
+                
+                if (!response.ok) {
+                    throw new Error('Не удалось получить данные о погоде');
+                }
+                
+                const data = await response.json();
+                
+                // Обновляем данные погоды
+                const temp = Math.round(data.main.temp);
+                const feelsLike = Math.round(data.main.feels_like);
+                const humidity = data.main.humidity;
+                const windSpeed = Math.round(data.wind.speed);
+                const description = data.weather[0].description;
+                
+                // Определяем иконку погоды
+                let weatherIcon = '☁️';
+                switch (data.weather[0].main.toLowerCase()) {
+                    case 'clear':
+                        weatherIcon = '☀️';
+                        break;
+                    case 'clouds':
+                        weatherIcon = '☁️';
+                        break;
+                    case 'rain':
+                        weatherIcon = '🌧️';
+                        break;
+                    case 'drizzle':
+                        weatherIcon = '🌦️';
+                        break;
+                    case 'thunderstorm':
+                        weatherIcon = '⛈️';
+                        break;
+                    case 'snow':
+                        weatherIcon = '❄️';
+                        break;
+                    case 'mist':
+                    case 'fog':
+                    case 'haze':
+                        weatherIcon = '🌫️';
+                        break;
+                }
+                
+                // Проверяем наличие osadkov
+                //const precipitation = data.rain?.['1h'] || data.snow?.['1h'] || 0;
+                const precipitation = 15;
+                const precipitationElement = document.getElementById('weather-precipitation');
+                const precipitationValueElement = document.getElementById('weather-rain');
+                
+                if (precipitation > 0) {
+                    precipitationElement.style.display = 'flex';
+                    precipitationValueElement.textContent = `${precipitation.toFixed(1)} мм`;
+                } else {
+                    precipitationElement.style.display = 'none';
+                }
+                
+                // Обновляем сугробы в зависимости от количества osadkov
+                updateSnowdrift(precipitation);
+                
+                // Обновляем частоту снежинок в зависимости от количества осадkov
+                updateSnowflakeFrequency(precipitation);
+                
+                // Обновляем элементы погоды
+                document.getElementById('weather-temp').textContent = `${temp}°C`;
+                document.getElementById('weather-feels').textContent = `${feelsLike}°C`;
+                document.getElementById('weather-humidity').textContent = `${humidity}%`;
+                document.getElementById('weather-wind').textContent = `${windSpeed} м/с`;
+                document.getElementById('weather-desc').textContent = description;
+                document.getElementById('weather-icon').textContent = weatherIcon;
+                
+                // Показываем погоду
+                weatherContainer.style.opacity = '1';
+                loadingEl.style.display = 'none';
+                
+            } catch (error) {
+                console.error('Ошибка получения погоды:', error);
+                
+                // Показываем сообщение об ошибке
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'block';
+                weatherContainer.style.opacity = '0.5';
+                
+                // Через 5 секунд попробуем снова
+                setTimeout(getWeather, 5000);
+            }
+        }
+
+        // Функция для настройки расписания обновления погоды
+        function setupWeatherUpdateSchedule() {
+            const now = new Date();
+            
+            // Рассчитываем время до следующего часа
+            const minutesToNextHour = 60 - now.getMinutes();
+            const secondsToNextHour = (minutesToNextHour * 60) - now.getSeconds() - Math.floor(now.getMilliseconds() / 1000);
+            
+            // Переводим в миллисекунды
+            const msToNextHour = secondsToNextHour * 1000 + (1000 - now.getMilliseconds());
+            
+            console.log(`Следующее обновление погоды через: ${Math.floor(msToNextHour / 60000)} минут`);
+            
+            // Устанавливаем таймер до следующего часа
+            setTimeout(() => {
+                // Обновляем погоду
+                getWeather();
+                
+                // Устанавливаем интервал на каждый час
+                setInterval(getWeather, 60 * 60 * 1000); // Каждый час
+            }, msToNextHour);
+        }
+        
+        // Функция для обновления сугробов
+        function updateSnowdrift(precipitation) {
+            const snowdrift = document.getElementById('snowdrift');
+            
+            // Рассчитываем высоту сугроба в зависимости от количества осадков
+            // Максимальная высота - 100px при 10мм осадков
+            const maxPrecipitation = 10; // мм
+            const maxHeight = 100; // px
+            
+            let height = 0;
+            if (precipitation > 0) {
+                height = Math.min((precipitation / maxPrecipitation) * maxHeight, maxHeight);
+            }
+            
+            // Плавно изменяем высоту сугроба
+            snowdrift.style.height = height + 'px';
+            
+            // Добавляем снежинки в сугроб при достаточном количестве осадков
+            if (precipitation > 0.5) {
+                createSnowParticles(precipitation);
+            } else {
+                // Очищаем снежинки при отсутствии осадков
+                clearSnowParticles();
+            }
+        }
+        
+        // Функция для создания снежинок в сугробе
+        function createSnowParticles(precipitation) {
+            const snowdrift = document.getElementById('snowdrift');
+            const existingParticles = snowdrift.querySelectorAll('.snow-particle');
+            
+            // Удаляем старые частицы
+            existingParticles.forEach(particle => particle.remove());
+            
+            // Создаем новые частицы в зависимости от количества осадков
+            const particleCount = Math.floor(precipitation * 3); // 3 частицы на каждый мм
+            const maxParticles = 20; // Максимум 20 частиц
+            
+            for (let i = 0; i < Math.min(particleCount, maxParticles); i++) {
+                const particle = document.createElement('div');
+                particle.className = 'snow-particle';
+                
+                // Случайные размеры и позиции
+                const size = Math.random() * 4 + 2; // 2-6px
+                const left = Math.random() * 100; // 0-100%
+                const bottom = Math.random() * 20; // 0-20px от низа
+                
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = left + '%';
+                particle.style.bottom = bottom + 'px';
+                
+                // Случайная задержка анимации
+                const delay = Math.random() * 8;
+                particle.style.animationDelay = delay + 's';
+                
+                snowdrift.appendChild(particle);
+            }
+        }
+        
+        // Функция для очистки снежинок
+        function clearSnowParticles() {
+            const snowdrift = document.getElementById('snowdrift');
+            const particles = snowdrift.querySelectorAll('.snow-particle');
+            particles.forEach(particle => particle.remove());
+        }
+
+        // Переменные для управления снежинками
+        let snowflakeInterval;
+        let currentPrecipitation = 0;
+        
+        // Функция для обновления частоты снежинок в зависимости от осадков
+        function updateSnowflakeFrequency(precipitation) {
+            // Очищаем предыдущий интервал
+            if (snowflakeInterval) {
+                clearInterval(snowflakeInterval);
+            }
+            
+            // Рассчитываем интервал между снежинками
+            // Без осадков: 2000мс (редкие случайные снежинки)
+            // При 10мм осадков: 100мс (очень частые)
+            const minInterval = 100; // минимальный интервал
+            const maxInterval = 2000; // максимальный интервал
+            
+            let interval = maxInterval;
+            if (precipitation > 0) {
+                const maxPrecipitation = 10; // мм
+                interval = Math.max(minInterval, maxInterval - (precipitation / maxPrecipitation) * (maxInterval - minInterval));
+            }
+            
+            // Устанавливаем новый интервал
+            snowflakeInterval = setInterval(createSnowflakes, interval);
+            
+            // Сохраняем текущее значение осадков
+            currentPrecipitation = precipitation;
+        }
+        
+        // Создаем снежинки каждые 300мс
+        setInterval(createSnowflakes, 300);
+        
+        // Загружаем погоду при запуске и настраиваем расписание обновления
+        getWeather();
+        setupWeatherUpdateSchedule();
+    </script>
+</body>
+</html>
