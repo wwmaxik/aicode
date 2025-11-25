@@ -826,8 +826,7 @@
                 }
                 
                 // Проверяем наличие osadkov
-                //const precipitation = data.rain?.['1h'] || data.snow?.['1h'] || 0;
-                const precipitation = 15;
+                const precipitation = data.rain?.['1h'] || data.snow?.['1h'] || 0;
                 const precipitationElement = document.getElementById('weather-precipitation');
                 const precipitationValueElement = document.getElementById('weather-rain');
                 
